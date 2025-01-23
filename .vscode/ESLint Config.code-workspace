@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "path": "..",
+    },
+  ],
+  "settings": {
+    "editor.indentSize": 2,
+    "[json]": {
+      "editor.indentSize": 4,
+    },
+    "[jsonc]": {
+      "editor.indentSize": 4,
+    },
+    "[jsonl]": {
+      "editor.indentSize": 4,
+    },
+  },
+}
