@@ -2,7 +2,7 @@ import type { Linter } from "eslint";
 
 import type { ExtensionFactory } from "./types";
 
-export default (async ({ typed }) => {
+export default (async ({ typed, ignores = [] }) => {
   const testingLibrary = (await import("eslint-plugin-testing-library"))
     .default;
   const vitest = (await import("@vitest/eslint-plugin")).default;
@@ -22,6 +22,7 @@ export default (async ({ typed }) => {
     {
       files: ["**/*.spec.ts"],
       ...vitest.configs.recommended,
+      ignores,
 
       rules: {
         ...vitest.configs.recommended.rules,
@@ -41,18 +42,20 @@ export default (async ({ typed }) => {
     },
     {
       files: ["**/*.spec.ts"],
-      ignores: ["**/*.svelte.spec.ts"],
+      ignores: ["**/*.svelte.spec.ts", ...ignores],
       ...testingLibrary.configs["flat/dom"],
       ...dom.configs["flat/recommended"],
     },
     {
       files: ["**/*.svelte.spec.ts"],
+      ignores,
       ...testingLibrary.configs["flat/svelte"],
       ...dom.configs["flat/recommended"],
     },
     playwright
       ? {
           ...playwright.configs["flat/recommended"],
+          ignores,
           files: ["**/e2e/**"],
           rules: {
             ...playwright.configs["flat/recommended"].rules,
@@ -63,6 +66,7 @@ export default (async ({ typed }) => {
       ? {
           ...webdriverio.configs["flat/recommended"],
           files: ["**/e2e/**"],
+          ignores,
         }
       : {},
   ];

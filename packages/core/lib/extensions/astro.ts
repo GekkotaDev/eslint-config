@@ -2,7 +2,7 @@ import type { Linter } from "eslint";
 
 import type { ExtensionFactory } from "./types";
 
-export default (async ({ ignores, override }) => {
+export default (async ({ ignores = [], override }) => {
   const astro = (await import("eslint-plugin-astro")).default;
   const configs: Linter.Config[] = [
     ...astro.configs.recommended,

@@ -2,7 +2,7 @@ import type { Linter } from "eslint";
 
 import type { ExtensionFactory } from "./types";
 
-export default (async ({ override, ignores }) => {
+export default (async ({ override, ignores = [] }) => {
   const query = (await import("@tanstack/eslint-plugin-query")).default;
   const configs: Linter.Config[] = [
     ...query.configs["flat/recommended"],

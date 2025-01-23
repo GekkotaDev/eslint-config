@@ -2,7 +2,7 @@ import type { Linter } from "eslint";
 
 import type { ExtensionFactory } from "./types";
 
-export default (async ({ override, ignores }) => {
+export default (async ({ override, ignores = [] }) => {
   const svelte = (await import("eslint-plugin-svelte")).default;
   const configs: Linter.Config[] = [
     ...svelte.configs["flat/recommended"],

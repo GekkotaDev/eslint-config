@@ -167,7 +167,7 @@ export const configs = async (
   configs.push(...processors);
   configs.push(...(options?.overrides ?? []));
   configs.push({
-    ignores: options?.ignores,
+    ignores: options?.ignores ?? [],
   });
 
   return configs.filter(

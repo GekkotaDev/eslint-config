@@ -43,9 +43,7 @@ export const tail = [
     },
   },
   command(),
-  gitignore({
-    files: [".gitignore", ".eslintignore"],
-  }),
+  gitignore(),
 ] satisfies Linter.Config[];
 
 export const functional = {
