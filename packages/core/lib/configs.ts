@@ -106,21 +106,21 @@ export const functional = {
 
 export const typescript = (
   options: Partial<{ tsconfigs?: string[] | true; tsconfigRootDir: string }>,
-): Linter.Config[] => [
+): Linter.Config[] =>
   typeof options.tsconfigs === "undefined"
-    ? (ts.configs.recommended as Linter.Config)
-    : ({
-        ...ts.configs.recommendedTypeChecked,
-
-        languageOptions: {
-          parserOptions: {
-            projectService: true,
-            project: options.tsconfigs,
-            tsconfigRootDir: options.tsconfigRootDir,
+    ? [ts.configs.recommended as Linter.Config]
+    : [
+        ts.configs.recommendedTypeChecked as Linter.Config,
+        {
+          languageOptions: {
+            parserOptions: {
+              projectService: true,
+              project: options.tsconfigs,
+              tsconfigRootDir: options.tsconfigRootDir,
+            },
           },
         },
-      } as Linter.Config),
-];
+      ];
 
 export const stylistic = (
   options: Partial<{ groups: string[][] }>,
