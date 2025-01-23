@@ -34,8 +34,8 @@ export interface Options {
   /** Directory containing the root `.tsconfig` */
   tsconfigRootDir: string;
 
-  /** Location of all `.tsconfig` files in the repository. */
-  tsconfigs: string[] | true;
+  /** Enable type aware linting. Required for some rules. */
+  typed: true;
 
   /**
    * Opt-in linter rulesets. These require their respective optional
@@ -96,14 +96,14 @@ export interface Options {
 export const configs = async (
   options?: Partial<Options>,
 ): Promise<Linter.Config[]> => {
-  const typed = Boolean(options?.tsconfigs) || undefined;
+  const typed = Boolean(options?.typed) || undefined;
 
   let configs: Linter.Config[] = [...head];
 
   configs.push(
     ...typescript({
       tsconfigRootDir: options?.tsconfigRootDir,
-      tsconfigs: options?.tsconfigs,
+      typed: options?.typed,
     }),
   );
 

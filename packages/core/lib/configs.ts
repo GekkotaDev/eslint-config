@@ -105,16 +105,16 @@ export const functional = {
 } as const satisfies Record<string, Linter.Config[]>;
 
 export const typescript = (
-  options: Partial<{ tsconfigs?: string[] | true; tsconfigRootDir: string }>,
+  options: Partial<{ typed?: true; tsconfigRootDir: string }>,
 ): Linter.Config[] =>
-  typeof options.tsconfigs === "undefined"
+  typeof options.typed === "undefined"
     ? [...(ts.configs.recommended as Linter.Config[])]
     : [
         ...(ts.configs.recommendedTypeChecked as Linter.Config[]),
         {
           languageOptions: {
             parserOptions: {
-              projectService: true,
+              projectService: options.typed,
               tsconfigRootDir: options.tsconfigRootDir,
             },
           },
