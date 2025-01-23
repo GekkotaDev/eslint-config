@@ -1,4 +1,4 @@
-import type { Linter } from "eslint";
+import type { ESLint, Linter } from "eslint";
 
 import type { ExtensionOptions } from "./extensions/types.js";
 
@@ -7,6 +7,8 @@ import { head, tail, functional, typescript, stylistic } from "./configs.js";
 import processors from "./processors.js";
 
 export interface Options {
+  _DEBUG: boolean;
+
   /** Global array of files to ignore */
   ignores: string[];
 
@@ -105,6 +107,8 @@ export const configs = async (
     }),
   );
 
+  configs.push(...functional.base);
+
   if (options?.fp?.includes("no-exceptions"))
     configs.push(...functional["no-exceptions"]);
 
@@ -170,7 +174,13 @@ export const configs = async (
     ignores: options?.ignores ?? [],
   });
 
-  return configs.filter(
-    (config) => typeof config !== undefined || Object.keys(config).length > 0,
-  );
+  return configs.filter((config) => {
+    if (typeof config === undefined) return;
+    if (Object.keys(config).length < 1) return;
+    if (Object.hasOwn(config, "0"))
+      if (options?._DEBUG) {
+        throw config;
+      } else return;
+    return true;
+  });
 };
