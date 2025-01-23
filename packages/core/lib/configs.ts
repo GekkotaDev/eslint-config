@@ -39,6 +39,7 @@ export const tail = [
   },
   {
     rules: {
+      "no-undef": "off",
       "jsdoc/tag-lines": "off",
     },
   },

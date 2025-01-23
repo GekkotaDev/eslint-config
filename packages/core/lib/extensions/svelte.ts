@@ -17,6 +17,22 @@ export default (async ({ override, ignores = [] }) => {
       ...override,
     },
     {
+      files: ["**/*.svelte.ts", "**/*.svelte.*.ts"],
+      rules: {
+        /*
+          This conflicts with runes where reassignments and to a limited extent
+          mutations are used for reactivity.
+         */
+        "functional/no-let": "off",
+
+        /*
+          It is impossible NOT to invoke a function for its side effects in
+          Svelte(Kit) contexts such as the navigation APIs or the $effect rune.
+         */
+        "functional/no-expression-statements": "off",
+      },
+    },
+    {
       files: ["**/*.svelte"],
       ignores,
       languageOptions: {
@@ -25,6 +41,21 @@ export default (async ({ override, ignores = [] }) => {
           parser: typescriptParser,
           extraFileExtensions: [".svelte"],
         },
+      },
+
+      rules: {
+        /* Template conflicts */
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+
+        /*
+          It is impossible NOT to invoke a function for its side effects in
+          Svelte(Kit) contexts such as the navigation APIs or the $effect rune.
+         */
+        "functional/no-expression-statements": "off",
+
+        "unicorn/filename-case": "off",
+        "unicorn/no-object-as-default-parameter": "off",
       },
     },
   ];
