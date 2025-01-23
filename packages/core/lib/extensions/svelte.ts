@@ -1,4 +1,6 @@
 import type { Linter } from "eslint";
+import * as svelteParser from "svelte-eslint-parser";
+import * as typescriptParser from "@typescript-eslint/parser";
 
 import type { ExtensionFactory } from "./types";
 
@@ -14,7 +16,17 @@ export default (async ({ override, ignores = [] }) => {
       },
       ...override,
     },
-    { files: ["**/*.svelte"], ignores },
+    {
+      files: ["**/*.svelte"],
+      ignores,
+      languageOptions: {
+        parser: svelteParser,
+        parserOptions: {
+          parser: typescriptParser,
+          extraFileExtensions: [".svelte"],
+        },
+      },
+    },
   ];
 
   return configs.filter((config) => Object.keys(config).length > 0);
