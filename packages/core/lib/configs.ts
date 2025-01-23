@@ -115,10 +115,13 @@ export const typescript = (
           languageOptions: {
             parserOptions: {
               projectService: true,
-              project: options.tsconfigs,
               tsconfigRootDir: options.tsconfigRootDir,
             },
           },
+        },
+        {
+          files: ["**/*.js"],
+          ...(ts.configs.disableTypeChecked as Linter.Config),
         },
       ];
 

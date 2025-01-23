@@ -4,7 +4,7 @@ import type { ExtensionFactory } from "./types";
 export default (async () => {
   const configs: Linter.Config[] = [
     // @ts-expect-error no type declarations.
-    await import("eslint-config-prettier"),
+    (await import("eslint-config-prettier")).default,
   ];
 
   try {
