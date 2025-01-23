@@ -166,14 +166,9 @@ export const configs = async (
   configs.push(...tail);
   configs.push(...processors);
   configs.push(...(options?.overrides ?? []));
-
-  configs.forEach(
-    (config) =>
-      (config.ignores = [
-        ...(config.ignores ?? []),
-        ...(options?.ignores ?? []),
-      ]),
-  );
+  configs.push({
+    ignores: options?.ignores,
+  });
 
   return configs.filter(
     (config) => typeof config !== undefined || Object.keys(config).length > 0,
