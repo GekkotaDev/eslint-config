@@ -108,9 +108,9 @@ export const typescript = (
   options: Partial<{ tsconfigs?: string[] | true; tsconfigRootDir: string }>,
 ): Linter.Config[] => [
   typeof options.tsconfigs === "undefined"
-    ? (ts.configs.eslintRecommended as Linter.Config)
+    ? (ts.configs.recommended as Linter.Config)
     : ({
-        ...ts.configs.recommendedTypeCheckedOnly,
+        ...ts.configs.recommendedTypeChecked,
 
         languageOptions: {
           parserOptions: {
