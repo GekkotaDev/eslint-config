@@ -178,9 +178,13 @@ export const configs = async (
     if (typeof config === undefined) return;
     if (Object.keys(config).length < 1) return;
     if (Object.hasOwn(config, "0"))
-      if (options?._DEBUG) {
+      if (options?._DEBUG === true) {
         throw config;
-      } else return;
+      } else if (options?._DEBUG === false) {
+        return true;
+      } else {
+        return;
+      }
     return true;
   });
 };
