@@ -22,14 +22,18 @@ export interface Options {
   overrides: Linter.Config[];
 
   /** Opt-in functional programming rules. */
-  fp: (
-    | "with-currying"
-    | "no-exceptions"
-    | "no-inheritance"
-    | "no-loops"
-    | "no-mutability"
-    | "no-side-effects"
-  )[];
+  fp: {
+    files: string[];
+    ignores: string[];
+    rules: (
+      | "with-currying"
+      | "no-exceptions"
+      | "no-inheritance"
+      | "no-loops"
+      | "no-mutability"
+      | "no-side-effects"
+    )[];
+  };
 
   /** Directory containing the root `.tsconfig` */
   tsconfigRootDir: string;
@@ -107,25 +111,60 @@ export const configs = async (
     }),
   );
 
-  configs.push(...functional.base);
+  configs.push(
+    ...functional({
+      files: options?.fp?.files,
+      ignores: options?.fp?.ignores,
+    }).base,
+  );
 
-  if (options?.fp?.includes("no-exceptions"))
-    configs.push(...functional["no-exceptions"]);
+  if (options?.fp?.rules?.includes("no-exceptions"))
+    configs.push(
+      ...functional({
+        files: options?.fp?.files,
+        ignores: options?.fp?.ignores,
+      })["no-exceptions"],
+    );
 
-  if (options?.fp?.includes("no-inheritance"))
-    configs.push(...functional["no-inheritance"]);
+  if (options?.fp?.rules?.includes("no-inheritance"))
+    configs.push(
+      ...functional({
+        files: options?.fp?.files,
+        ignores: options?.fp?.ignores,
+      })["no-inheritance"],
+    );
 
-  if (options?.fp?.includes("no-loops"))
-    configs.push(...functional["no-loops"]);
+  if (options?.fp?.rules?.includes("no-loops"))
+    configs.push(
+      ...functional({
+        files: options?.fp?.files,
+        ignores: options?.fp?.ignores,
+      })["no-loops"],
+    );
 
-  if (options?.fp?.includes("no-mutability"))
-    configs.push(...functional["no-mutability"]);
+  if (options?.fp?.rules?.includes("no-mutability"))
+    configs.push(
+      ...functional({
+        files: options?.fp?.files,
+        ignores: options?.fp?.ignores,
+      })["no-mutability"],
+    );
 
-  if (options?.fp?.includes("no-side-effects"))
-    configs.push(...functional["no-side-effects"]);
+  if (options?.fp?.rules?.includes("no-side-effects"))
+    configs.push(
+      ...functional({
+        files: options?.fp?.files,
+        ignores: options?.fp?.ignores,
+      })["no-side-effects"],
+    );
 
-  if (options?.fp?.includes("with-currying"))
-    configs.push(...functional["with-currying"]);
+  if (options?.fp?.rules?.includes("with-currying"))
+    configs.push(
+      ...functional({
+        files: options?.fp?.files,
+        ignores: options?.fp?.ignores,
+      })["with-currying"],
+    );
 
   if (options?.extensions?.query)
     configs.push(

@@ -47,63 +47,86 @@ export const tail = [
   gitignore(),
 ] satisfies Linter.Config[];
 
-export const functional = {
-  base: [
-    {
-      ...fp.configs.off,
-    } as Linter.Config,
-  ],
-  "with-currying": [
-    {
-      rules: {
-        "functional/functional-parameters": "error",
+export const functional = ({
+  files,
+  ignores,
+}: Partial<{
+  files: string[];
+  ignores: string[];
+}>) =>
+  ({
+    base: [
+      {
+        ...fp.configs.off,
+      } as Linter.Config,
+    ],
+    "with-currying": [
+      {
+        files,
+        ignores,
+        rules: {
+          "functional/functional-parameters": "error",
+        },
       },
-    },
-  ],
-  "no-exceptions": [
-    {
-      rules: {
-        "functional/no-throw-statements": "error",
+    ],
+    "no-exceptions": [
+      {
+        files,
+        ignores,
+        rules: {
+          "functional/no-throw-statements": "error",
+        },
       },
-    },
-  ],
-  "no-inheritance": [
-    {
-      rules: {
-        "functional/no-class-inheritance": "error",
+    ],
+    "no-inheritance": [
+      {
+        files,
+        ignores,
+        rules: {
+          "functional/no-class-inheritance": "error",
+        },
       },
-    },
-  ],
-  "no-loops": [
-    {
-      rules: {
-        "functional/no-loop-statements": "error",
+    ],
+    "no-loops": [
+      {
+        files,
+        ignores,
+        rules: {
+          "functional/no-loop-statements": "error",
+        },
       },
-    },
-  ],
-  "no-mutability": [
-    {
-      rules: {
-        "@typescript-eslint/prefer-readonly": "error",
-        "functional/immutable-data": "error",
-        "functional/no-let": "error",
-        "functional/type-declaration-immutability": "error",
-        "functional/no-mixed-types": "error",
-        "no-param-reassign": "error",
-        "no-var": "error",
-        "prefer-const": "error",
+    ],
+    "no-mutability": [
+      {
+        files,
+        ignores,
+        rules: {
+          "@typescript-eslint/prefer-readonly": "error",
+          "functional/immutable-data": "error",
+          "functional/no-let": "error",
+          "functional/type-declaration-immutability": "error",
+          "functional/no-mixed-types": "error",
+          "no-param-reassign": "error",
+          "no-var": "error",
+          "prefer-const": "error",
+
+          "unicorn/no-array-for-each": "off",
+        },
       },
-    },
-  ],
-  "no-side-effects": [
-    {
-      rules: {
-        "functional/no-expression-statements": "error",
-        "functional/no-return-void": "error",
+    ],
+    "no-side-effects": [
+      {
+        files,
+        ignores,
+        rules: {
+          "functional/no-expression-statements": "error",
+          "functional/no-return-void": "error",
+
+          "unicorn/no-useless-undefined": "off",
+        },
       },
-    },
-  ],
-} as const satisfies Record<string, Linter.Config[]>;
+    ],
+  }) as const satisfies Record<string, Linter.Config[]>;
 
 export const typescript = (
   options: Partial<{ typed?: true; tsconfigRootDir: string }>,
