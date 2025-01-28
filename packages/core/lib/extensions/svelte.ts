@@ -1,10 +1,11 @@
 import type { Linter } from "eslint";
-import * as svelteParser from "svelte-eslint-parser";
-import * as typescriptParser from "@typescript-eslint/parser";
 
 import type { ExtensionFactory } from "./types";
 
 export default (async ({ override, ignores = [] }) => {
+  const svelteParser = (await import("svelte-eslint-parser")).default;
+  const typescriptParser = (await import("@typescript-eslint/parser")).default;
+
   const svelte = (await import("eslint-plugin-svelte")).default;
   const configs: Linter.Config[] = [
     ...svelte.configs["flat/recommended"],

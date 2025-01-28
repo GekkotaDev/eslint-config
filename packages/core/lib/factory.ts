@@ -24,7 +24,7 @@ export interface Options {
   /** Opt-in functional programming rules. */
   fp: {
     files: string[];
-    ignores: string[];
+    ignores?: string[];
     rules: (
       | "with-currying"
       | "no-exceptions"
