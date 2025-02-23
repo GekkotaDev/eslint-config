@@ -74,6 +74,14 @@ export interface Options {
     query: true | ExtensionOptions;
 
     /**
+     * Linting for Solid.js
+     *
+     * ### Requires
+     * - `eslint-plugin-solid`
+     */
+    solid: true | ExtensionOptions;
+
+    /**
      * Linting for Svelte components.
      *
      * ### Requires
@@ -172,6 +180,15 @@ export const configs = async (
         typeof options.extensions.query === "boolean"
           ? { typed }
           : { typed, ...options.extensions.query },
+      )),
+    );
+
+  if (options?.extensions?.solid)
+    configs.push(
+      ...(await extension.solid(
+        typeof options.extensions.solid === "boolean"
+          ? { typed }
+          : { typed, ...options.extensions.solid },
       )),
     );
 
