@@ -11,6 +11,7 @@ import promise from "eslint-plugin-promise";
 import unicorn from "eslint-plugin-unicorn";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import stylisticJs from "@stylistic/eslint-plugin-js";
+import stylisticJsx from "@stylistic/eslint-plugin-jsx";
 import stylisticTs from "@stylistic/eslint-plugin-ts";
 import ts from "typescript-eslint";
 
@@ -186,6 +187,15 @@ export const stylistic = (
       },
 
       rules: {},
+    },
+    {
+      plugins: {
+        "@stylistic/jsx": stylisticJsx,
+      },
+
+      rules: {
+        "@stylistic/jsx/jsx-sort-props": "warn",
+      },
     },
     {
       plugins: {
